@@ -1,0 +1,32 @@
+name: 'Banco Web - CI'
+
+# gatilhos/triggers
+on: 
+  workflow_dispatch:
+
+jobs:
+  cypress-test: 
+    runs-on: macos-lastest
+
+    env:
+      API_BASE_URL: 'http://localhost:3000'
+      PORT: 4000   
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Iniciar o servidor de mocks
+        run: npm run mock-server
+      
+      - name: Iniciar o servidor da aplicacao
+        run: npm run server
+
+      - name: Executar testes
+        run: npx cypress run
+
+
+        
